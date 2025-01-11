@@ -39,10 +39,10 @@ mac:
 # Linux Configuration
 linux: 
   target: 'AppImage'
-  maintainer: 'Daniel Scalzi'
-  vendor: 'Daniel Scalzi'
-  synopsis: 'Modded Minecraft Launcher'
-  description: 'Custom launcher which allows users to join modded servers. All mods, configurations, and updates are handled automatically.'
+  maintainer: 'yOstrix/Sun'
+  vendor: 'yOstrix/Sun'
+  synopsis: 'MSMP Launcher'
+  description: 'Launcher para jogar no MSMP'
   category: 'Game'
 
 
