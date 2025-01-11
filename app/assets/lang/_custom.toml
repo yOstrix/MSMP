@@ -1,17 +1,17 @@
 # Custom Language File for Launcher Customizer
 
 [ejs.app]
-title = "Eu acho que foi crackeado :"
+title = "MSMP Launcher"
 
 [ejs.landing]
-mediaGitHubURL = "https://github.com/dscalzi/HeliosLauncher"
-mediaTwitterURL = "#"
+mediaGitHubURL = "#"
+mediaTwitterURL = "https://x.com/Monarcas096?t=1BruxpczhrFghVlyocIu4Q&s=09"
 mediaInstagramURL = "#"
 mediaYouTubeURL = "#"
-mediaDiscordURL = "https://discord.gg/zNWUXdt"
+mediaDiscordURL = "https://discord.gg/PSNaHRtJjY"
 
 [ejs.settings]
-sourceGithubLink = "https://github.com/dscalZi/HeliosLauncher"
+sourceGithubLink = "https://github.com/yOstrix/MSMP"
 supportLink = "https://github.com/dscalZi/HeliosLauncher/issues"
 
 [ejs.welcome]
