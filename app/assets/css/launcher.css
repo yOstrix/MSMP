@@ -476,7 +476,7 @@ body, button {
     transition: 0.25s ease;
 }
 #loginForm a:hover,
-#loginForm a:focus {
+#loginForm a:focus { 
     color: #a2a2a2;
     outline: none;
 }
@@ -486,8 +486,6 @@ body, button {
 
 /* Logo on login form. */
 #loginImageSeal {
-    border-radius: 50%;
-    border: 2px solid #cad7e1;
     background: rgba(1, 2, 1, 0.5);
     height: 125px;
     width: 125px;
