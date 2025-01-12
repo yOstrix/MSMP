@@ -37,56 +37,57 @@ webFrame.setZoomLevel(0)
 webFrame.setVisualZoomLevelLimits(1, 1)
 
 // Initialize auto updates in production environments.
-if (!isDev && process.platform === 'win32') {
+let updateCheckListener
+if(!isDev){
     ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
-        switch (arg) {
+        switch(arg){
             case 'checking-for-update':
-                loggerAutoUpdater.info('Verificando atualizações..')
+                loggerAutoUpdater.info('Checking for update..')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.checkingForUpdateButton'), true)
                 break
             case 'update-available':
-                loggerAutoUpdater.info('Nova atualização disponível', info.version)
-                info.downloadURL = `https://github.com/yOstrix/MSMP/releases/v${info.version}/MSMP_Launcher-setup.exe`
-                showUpdateUI(info)
+                loggerAutoUpdater.info('New update available', info.version)
+                
+                if(process.platform === 'win32'){
+                    info.windowsDownload = `https://github.com/yOstrix/MSMP/releases/v${info.version}/MSMP-Launcher-setup${info.version}${process.arch === 'arm64' ? '-arm64' : '-x64'}.exe`
+                    showUpdateUI(info)
+                }
+                
                 populateSettingsUpdateInformation(info)
                 break
             case 'update-downloaded':
-                loggerAutoUpdater.info('Atualização ' + info.version + ' pronta para ser instalada.')
+                loggerAutoUpdater.info('Update ' + info.version + ' ready to be installed.')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.installNowButton'), false, () => {
-                    if (!isDev) {
+                    if(!isDev){
                         ipcRenderer.send('autoUpdateAction', 'installUpdateNow')
                     }
                 })
                 showUpdateUI(info)
                 break
             case 'update-not-available':
-                loggerAutoUpdater.info('Nenhuma nova atualização encontrada.')
+                loggerAutoUpdater.info('No new update found.')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.checkForUpdatesButton'))
                 break
             case 'ready':
-                setInterval(() => {
+                updateCheckListener = setInterval(() => {
                     ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
                 }, 1800000)
                 ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
                 break
             case 'realerror':
-                if (info && info.code) {
-                    switch (info.code) {
-                        case 'ERR_UPDATER_INVALID_RELEASE_FEED':
-                            loggerAutoUpdater.info('Nenhum lançamento adequado encontrado.')
-                            break
-                        case 'ERR_XML_MISSED_ELEMENT':
-                            loggerAutoUpdater.info('Nenhum lançamento encontrado.')
-                            break
-                        default:
-                            loggerAutoUpdater.error('Erro durante a verificação de atualização..', info)
-                            loggerAutoUpdater.debug('Código do erro:', info.code)
-                            break
+                if(info != null && info.code != null){
+                    if(info.code === 'ERR_UPDATER_INVALID_RELEASE_FEED'){
+                        loggerAutoUpdater.info('No suitable releases found.')
+                    } else if(info.code === 'ERR_XML_MISSED_ELEMENT'){
+                        loggerAutoUpdater.info('No releases found.')
+                    } else {
+                        loggerAutoUpdater.error('Error during update check..', info)
+                        loggerAutoUpdater.debug('Error Code:', info.code)
                     }
                 }
                 break
             default:
-                loggerAutoUpdater.info('Argumento desconhecido', arg)
+                loggerAutoUpdater.info('Unknown argument', arg)
                 break
         }
     })
@@ -108,7 +109,7 @@ function showUpdateUI(info){
     //TODO Make this message a bit more informative `${info.version}`
     document.getElementById('image_seal_container').setAttribute('update', true)
     document.getElementById('image_seal_container').onclick = () => {
-        /*setOverlayContent('Update Available', 'A new update for the launcher is available. Would you like to install now?', 'Install', 'Later')
+        setOverlayContent('Atualização Disponível!', 'Foi lançado uma nova atualização do Launcher! Você deseja intalar ele agora?', 'Install', 'Later')
         setOverlayHandler(() => {
             if(!isDev){
                 ipcRenderer.send('autoUpdateAction', 'installUpdateNow')
@@ -120,7 +121,7 @@ function showUpdateUI(info){
         setDismissHandler(() => {
             toggleOverlay(false)
         })
-        toggleOverlay(true, true)*/
+        toggleOverlay(true, true)
         switchView(getCurrentView(), VIEWS.settings, 500, 500, () => {
             settingsNavItemListener(document.getElementById('settingsNavUpdate'), false)
         })

@@ -1,8 +1,8 @@
-appId: 'MSMP Launcher'
-productName: 'MSMP Launcher'
+appId: 'MSMP-Launcher'
+productName: 'MSMP-Launcher'
 artifactName: '${productName}-setup-${version}.${ext}'
 
-copyright: 'Copyright © 2018-2024 Daniel Scalzi'
+copyright: 'Copyright © 2025 yOstrix/Sun'
 
 asar: true
 compression: 'maximum'
@@ -41,7 +41,7 @@ linux:
   target: 'AppImage'
   maintainer: 'yOstrix/Sun'
   vendor: 'yOstrix/Sun'
-  synopsis: 'MSMP Launcher'
+  synopsis: 'MSMP-Launcher'
   description: 'Launcher para jogar no MSMP'
   category: 'Game'
 
