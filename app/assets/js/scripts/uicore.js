@@ -37,57 +37,56 @@ webFrame.setZoomLevel(0)
 webFrame.setVisualZoomLevelLimits(1, 1)
 
 // Initialize auto updates in production environments.
-let updateCheckListener
-if(!isDev){
+if (!isDev && process.platform === 'win32') {
     ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
-        switch(arg){
+        switch (arg) {
             case 'checking-for-update':
-                loggerAutoUpdater.info('Checking for update..')
+                loggerAutoUpdater.info('Verificando atualizações..')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.checkingForUpdateButton'), true)
                 break
             case 'update-available':
-                loggerAutoUpdater.info('Nova atualização disponível!', info.version)
-                
-                if(process.platform === 'darwin'){
-                    info.darwindownload = `https://github.com/yOstrix/MSMP/releases/tag/update/download/v${info.version}/MSMP_Launcher-setup-${info.version}${process.arch === 'arm64' ? '-arm64' : '-x64'}.dmg`
-                    showUpdateUI(info)
-                }
-                
+                loggerAutoUpdater.info('Nova atualização disponível', info.version)
+                info.downloadURL = `https://github.com/yOstrix/MSMP/releases/v${info.version}/MSMP_Launcher-setup.exe`
+                showUpdateUI(info)
                 populateSettingsUpdateInformation(info)
                 break
             case 'update-downloaded':
-                loggerAutoUpdater.info('Update ' + info.version + ' ready to be installed.')
+                loggerAutoUpdater.info('Atualização ' + info.version + ' pronta para ser instalada.')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.installNowButton'), false, () => {
-                    if(!isDev){
+                    if (!isDev) {
                         ipcRenderer.send('autoUpdateAction', 'installUpdateNow')
                     }
                 })
                 showUpdateUI(info)
                 break
             case 'update-not-available':
-                loggerAutoUpdater.info('No new update found.')
+                loggerAutoUpdater.info('Nenhuma nova atualização encontrada.')
                 settingsUpdateButtonStatus(Lang.queryJS('uicore.autoUpdate.checkForUpdatesButton'))
                 break
             case 'ready':
-                updateCheckListener = setInterval(() => {
+                setInterval(() => {
                     ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
                 }, 1800000)
                 ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
                 break
             case 'realerror':
-                if(info != null && info.code != null){
-                    if(info.code === 'ERR_UPDATER_INVALID_RELEASE_FEED'){
-                        loggerAutoUpdater.info('No suitable releases found.')
-                    } else if(info.code === 'ERR_XML_MISSED_ELEMENT'){
-                        loggerAutoUpdater.info('No releases found.')
-                    } else {
-                        loggerAutoUpdater.error('Error during update check..', info)
-                        loggerAutoUpdater.debug('Error Code:', info.code)
+                if (info && info.code) {
+                    switch (info.code) {
+                        case 'ERR_UPDATER_INVALID_RELEASE_FEED':
+                            loggerAutoUpdater.info('Nenhum lançamento adequado encontrado.')
+                            break
+                        case 'ERR_XML_MISSED_ELEMENT':
+                            loggerAutoUpdater.info('Nenhum lançamento encontrado.')
+                            break
+                        default:
+                            loggerAutoUpdater.error('Erro durante a verificação de atualização..', info)
+                            loggerAutoUpdater.debug('Código do erro:', info.code)
+                            break
                     }
                 }
                 break
             default:
-                loggerAutoUpdater.info('Unknown argument', arg)
+                loggerAutoUpdater.info('Argumento desconhecido', arg)
                 break
         }
     })
@@ -101,7 +100,7 @@ if(!isDev){
  * 
  * @param {boolean} val The new allow prerelease value.
  */
-function changeAllowPrerelease(val){
+function changeAllowPrerelease(val) {
     ipcRenderer.send('autoUpdateAction', 'allowPrereleaseChange', val)
 }
 
@@ -127,11 +126,6 @@ function showUpdateUI(info){
         })
     }
 }
-
-/* jQuery Example
-$(function(){
-    loggerUICore.info('UICore Initialized');
-})*/
 
 document.addEventListener('readystatechange', function () {
     if (document.readyState === 'interactive'){
