@@ -4,10 +4,10 @@
 title = "MSMP Launcher"
 
 [ejs.landing]
-mediaGitHubURL = "#"
+mediaGitHubURL = "https://github.com/yOstrix/MSMP"
 mediaTwitterURL = "https://x.com/Monarcas096?t=1BruxpczhrFghVlyocIu4Q&s=09"
-mediaInstagramURL = "#"
-mediaYouTubeURL = "#"
+mediaInstagramURL = "https://www.instagram.com/msmp__?igsh=c2R0MTB1NnR3ajl1"
+mediaYouTubeURL = "https://www.youtube.com/@Someonew-mg2wg#"
 mediaDiscordURL = "https://discord.gg/PSNaHRtJjY"
 
 [ejs.settings]
