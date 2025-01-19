@@ -485,11 +485,9 @@ body, button {
 
 /* Logo on login form. */
 #loginImageSeal {
-    border-radius: 50%;
-    background: rgba(1, 2, 1, 0.5);
+    background: rgb(2 2 2 / 0%);
     height: 125px;
     width: 125px;
-    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
     margin-bottom: 20px;
 }
 
@@ -2969,23 +2967,26 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.25s ease;
+    transition: opacity 0.25s ease,;
     font-weight: bold;
     letter-spacing: 2px;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(255, 255, 255, 0);
     -webkit-user-select: none;
     border: none;
     cursor: pointer;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    color: #33333300;
 }
-#avatarOverlay:hover,
+#avatarOverlay:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0);
+}
 #avatarOverlay:focus {
     opacity: 1;
 }
 #avatarOverlay:active {
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 /* User profile name text. */
@@ -3166,11 +3167,11 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Divider used on the bottom of the landing view. */
 .bot_divider {
-    height: 25px;
+    height: 49px;
     width: 2px;
-    background: rgba(107, 105, 105, 0.7);
-    margin-left: 20px;
-    margin-right: 20px;
+    background: rgb(255 255 255 / 70%);
+    margin-left: 12px;
+    margin-right: 12px;
 }
 
 /* * *
@@ -3196,15 +3197,21 @@ input:checked + .toggleSwitchSlider:before {
 #mojangStatusWrapper {
     position: relative;
     display: flex;
+    align-items: center;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 /* Icon which displays the status of the mojang services. */
 #mojang_status_icon {
-    font-size: 30px;
+    font-size: 24px;
     color: #848484;
-    margin-left: 15px;
+    margin-left: 10px;
     font-family: 'sans-serif';
+    transition: color 0.25s ease;
+}
+#mojang_status_icon:hover {
+    color: #ffffff;
 }
 
 /* Tooltip which displays more details about the mojang statuses. */
@@ -3212,20 +3219,20 @@ input:checked + .toggleSwitchSlider:before {
     position: absolute;
     visibility: hidden;
     opacity: 0;
-    width: 145px;
-    min-height: 150px;
-    background-color: rgba(0, 0, 0, 0.75);
+    width: 160px;
+    min-height: 160px;
+    background-color: rgba(0, 0, 0, 0.85);
     color: #fff;
-    border-radius: 4px;
-    padding: 5px 10px;
+    border-radius: 6px;
+    padding: 10px;
     z-index: 1;
     font-family: 'Avenir Medium';
     font-size: 12px;
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
-    bottom: calc(100% + 15px);
+    bottom: calc(100% + 10px);
+    left: 50%;
     transform: translateX(-50%);
-    margin-left: 50%;
-    box-shadow: 0px 0px 20px rgb(0, 0, 0);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     cursor: default;
 }
 #mojangStatusTooltip:after {
@@ -3236,7 +3243,7 @@ input:checked + .toggleSwitchSlider:before {
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent;
+    border-color: rgba(0, 0, 0, 0.85) transparent transparent transparent;
 }
 #mojangStatusWrapper:hover #mojangStatusTooltip {
     visibility: visible;
@@ -3248,8 +3255,10 @@ input:checked + .toggleSwitchSlider:before {
 #mojangStatusTooltipTitle {
     width: 100%;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 /* Wrapper container for the non essential services title. */
@@ -3269,29 +3278,32 @@ input:checked + .toggleSwitchSlider:before {
 /* Non essential service title text. */
 #mojangStatusNETitle {
     font-size: 10px;
-    padding: 0px 3px;
+    padding: 0px 5px;
     text-align: center;
     letter-spacing: 1px;
+    background-color: rgba(0, 0, 0, 0.85);
 }
 
 /* Wrapper container for mojang service information. */
 .mojangStatusContainer {
     display: flex;
+    align-items: center;
+    margin: 5px 0;
 }
 
 /* Displays the name of the mojang service. */
 .mojangStatusName {
     width: 100%;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 1px;
-    line-height: 12px;
-    padding: 6px 0px;
+    line-height: 14px;
+    padding: 5px 0;
 }
 
 /* Displays the status of the mojang service. */
 .mojangStatusIcon {
     margin-right: 10px;
-    font-size: 18.5px;
+    font-size: 18px;
     color: #848484;
 }
 
@@ -3372,27 +3384,33 @@ input:checked + .toggleSwitchSlider:before {
 
 /* The launch button. */
 #launch_button {
-    background: none;
+    background: linear-gradient(135deg, #62c27a, #78ff78);
     border: none;
     cursor: pointer;
     font-weight: 900;
     letter-spacing: 2px;
-    text-shadow: 0px 0px 0px #bebcbb;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     font-size: 20px;
-    padding: 0px;
-    transition: 0.25s ease;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: white;
+    transition: 0.25s ease, transform 0.2s;
     outline: none;
+    backdrop-filter: blur(10px);
 }
 #launch_button:hover,
 #launch_button:focus {
-    text-shadow: 0px 0px 20px #96ff6c, 0px 0px 20px #96ff6c;
+    background: linear-gradient(135deg, #77e392, #6efb6e);
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+    transform: scale(1.05);
 }
 #launch_button:active {
-    color: #96ff6c;
-    text-shadow: 0px 0px 20px #96ff6c, 0px 0px 20px #96ff6c;
+    background: linear-gradient(135deg, #7eff53, #7adf60);
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+    transform: scale(0.95);
 }
 #launch_button:disabled {
-    color: #c7c7c7;
+    background: #c7c7c7;
     cursor: default;
     pointer-events: none;
 }
@@ -3413,11 +3431,12 @@ input:checked + .toggleSwitchSlider:before {
 #launch_progress_label {
     font-weight: 900;
     letter-spacing: 1px;
-    text-shadow: 0px 0px 0px #bebcbb;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     font-size: 20px;
     min-width: 53.21px;
     max-width: 53.21px;
     text-align: right;
+    color: white;
 }
 
 /* Right side of launch details container, displays progress bar and details. */
@@ -3429,27 +3448,36 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Button which opens the server selection view. */
 #server_selection_button {
-    background: none;
+    background: linear-gradient(135deg, #fb6e6e, #eb4037);
     border: none;
     outline: none;
     cursor: pointer;
     line-height: 24px;
-    padding: 0px;
-    transition: 0.25s ease;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    transition: 0.25s ease, transform 0.2s;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
 }
 #server_selection_button:hover,
 #server_selection_button:focus {
-    text-shadow: 0px 0px 20px #fff, 0px 0px 20px #fff, 0px 0px 20px #fff;
+    background: linear-gradient(135deg, #fb6e6e, #eb4037);
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+    transform: scale(1.05);
 }
 #server_selection_button:active {
-    color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+    background: linear-gradient(135deg, #fa4848, #cb3931);
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+    transform: scale(0.95);
 }
 #server_selection_button:disabled {
-    color: #c7c7c7;
+    background: #c7c7c7;
     cursor: default;
     pointer-events: none;
 }
+
 /* Progress bar styles. */
 #launch_progress[value] {
     height: 3px;
@@ -3461,6 +3489,7 @@ input:checked + .toggleSwitchSlider:before {
 }
 #launch_progress[value]::-webkit-progress-value {
     background-color: #fff;
+    border-radius: 2px;
 }
 
 /* Span which displays information about the status of the launch process. */
@@ -3469,6 +3498,7 @@ input:checked + .toggleSwitchSlider:before {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    color: white;
 }
 
 /*******************************************************************************
