@@ -274,7 +274,6 @@ body, button {
 
 #welcomeImageSeal {
     border-radius: 50%;
-    border: 2px solid #cad7e1;
     background: rgba(1, 2, 1, 0.5);
     height: 125px;
     width: 125px;
@@ -476,7 +475,7 @@ body, button {
     transition: 0.25s ease;
 }
 #loginForm a:hover,
-#loginForm a:focus { 
+#loginForm a:focus {
     color: #a2a2a2;
     outline: none;
 }
@@ -486,6 +485,7 @@ body, button {
 
 /* Logo on login form. */
 #loginImageSeal {
+    border-radius: 50%;
     background: rgba(1, 2, 1, 0.5);
     height: 125px;
     width: 125px;
@@ -2642,24 +2642,6 @@ input:checked + .toggleSwitchSlider:before {
     background: #a02d2a;
 }
 
-/* News article comments styles. */
-#newsArticleComments {
-    margin-top: 5px;
-    display: inline-block;
-    font-size: 10px;
-    color: #ffffff;
-    text-decoration: none;
-    transition: 0.25s ease;
-    outline: none;
-    text-align: right;
-}
-#newsArticleComments:focus,
-#newsArticleComments:hover {
-    color: #e0e0e0;
-}
-#newsArticleComments:active {
-    color: #c7c7c7;
-}
 
 /* Article content container (right). */
 #newsArticleContainer {
@@ -2856,6 +2838,7 @@ input:checked + .toggleSwitchSlider:before {
     height: 70px;
     width: auto;
     position: relative;
+  /*  border: 2px solid white; */
     box-sizing: border-box;
 }
 
@@ -3203,7 +3186,7 @@ input:checked + .toggleSwitchSlider:before {
 /* Span which displays the player count of the selected server. */
 #player_count {
     color: #949494;
-    font-size: 8px;
+    font-size: 15px;
     font-weight: 900;
     text-shadow: 0px 0px 20px #949494;
     margin-left: 10px;
@@ -3402,11 +3385,11 @@ input:checked + .toggleSwitchSlider:before {
 }
 #launch_button:hover,
 #launch_button:focus {
-    text-shadow: 0px 0px 20px #fff, 0px 0px 20px #fff;
+    text-shadow: 0px 0px 20px #96ff6c, 0px 0px 20px #96ff6c;
 }
 #launch_button:active {
-    color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+    color: #96ff6c;
+    text-shadow: 0px 0px 20px #96ff6c, 0px 0px 20px #96ff6c;
 }
 #launch_button:disabled {
     color: #c7c7c7;
@@ -3462,7 +3445,11 @@ input:checked + .toggleSwitchSlider:before {
     color: #c7c7c7;
     text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
 }
-
+#server_selection_button:disabled {
+    color: #c7c7c7;
+    cursor: default;
+    pointer-events: none;
+}
 /* Progress bar styles. */
 #launch_progress[value] {
     height: 3px;
@@ -3741,7 +3728,6 @@ input:checked + .toggleSwitchSlider:before {
 /* Server listing image. */
 .serverListingImg {
     margin: 0px 10px 0px 5px;
-    border: 1px solid #fff;
     height: 50px;
     width: 50px;
 }

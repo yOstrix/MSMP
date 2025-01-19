@@ -98,6 +98,15 @@ function setLaunchEnabled(val){
     document.getElementById('launch_button').disabled = !val
 }
 
+/**
+ * Enable or disable the Select Server button.
+ * 
+ * @param {boolean} val True to enable, false to disable.
+ */
+function setSelectServerEnabled(val){
+    document.getElementById('server_selection_button').disabled = !val
+}
+
 // Bind launch button
 document.getElementById('launch_button').addEventListener('click', async e => {
     loggerLanding.info('Launching game..')
@@ -247,7 +256,7 @@ const refreshServerStatus = async (fade = false) => {
         const servStat = await getServerStatus(47, serv.hostname, serv.port)
         console.log(servStat)
         pLabel = Lang.queryJS('landing.serverStatus.players')
-        pVal = servStat.players.online + '/' + servStat.players.max
+        pVal = servStat.players.online
 
     } catch (err) {
         loggerLanding.warn('Unable to refresh server status, assuming offline.')
@@ -577,6 +586,9 @@ async function dlAsync(login = true) {
         // the progress bar stuff.
         const tempListener = function(data){
             if(GAME_LAUNCH_REGEX.test(data.trim())){
+                setLaunchEnabled(false)
+                document.getElementById('launch_button').innerHTML= "Abrindo..."
+                setSelectServerEnabled(false)
                 const diff = Date.now()-start
                 if(diff < MIN_LINGER) {
                     setTimeout(onLoadComplete, MIN_LINGER-diff)
@@ -592,11 +604,19 @@ async function dlAsync(login = true) {
             if(SERVER_JOINED_REGEX.test(data)){
                 DiscordWrapper.updateDetails(Lang.queryJS('landing.discord.joined'))
             } else if(GAME_JOINED_REGEX.test(data)){
+                setLaunchEnabled(false)
+                setSelectServerEnabled(false)
+                document.getElementById('launch_button').innerHTML= "Abrindo..."
+
                 DiscordWrapper.updateDetails(Lang.queryJS('landing.discord.joining'))
             }
         }
 
         const gameErrorListener = function(data){
+            setLaunchEnabled(true)
+            setSelectServerEnabled(true)
+            document.getElementById('launch_button').innerHTML= "JOGAR"
+
             data = data.trim()
             if(data.indexOf('Could not find or load main class net.minecraft.launchwrapper.Launch') > -1){
                 loggerLaunchSuite.error('Game launch failed, LaunchWrapper was not downloaded properly.')
@@ -619,6 +639,9 @@ async function dlAsync(login = true) {
                 DiscordWrapper.initRPC(distro.rawDistribution.discord, serv.rawServer.discord)
                 hasRPC = true
                 proc.on('close', (code, signal) => {
+                    setLaunchEnabled(true)
+                    setSelectServerEnabled(true)
+                    document.getElementById('launch_button').innerHTML= "JOGAR"
                     loggerLaunchSuite.info('Shutting down Discord Rich Presence..')
                     DiscordWrapper.shutdownRPC()
                     hasRPC = false
@@ -627,7 +650,9 @@ async function dlAsync(login = true) {
             }
 
         } catch(err) {
-
+            setLaunchEnabled(true)
+            setSelectServerEnabled(true)
+            document.getElementById('launch_button').innerHTML= "JOGAR"
             loggerLaunchSuite.error('Error during launch', err)
             showLaunchFailure(Lang.queryJS('landing.dlAsync.errorDuringLaunchTitle'), Lang.queryJS('landing.dlAsync.checkConsoleForDetails'))
 
@@ -645,7 +670,6 @@ const newsContent                   = document.getElementById('newsContent')
 const newsArticleTitle              = document.getElementById('newsArticleTitle')
 const newsArticleDate               = document.getElementById('newsArticleDate')
 const newsArticleAuthor             = document.getElementById('newsArticleAuthor')
-const newsArticleComments           = document.getElementById('newsArticleComments')
 const newsNavigationStatus          = document.getElementById('newsNavigationStatus')
 const newsArticleContentScrollable  = document.getElementById('newsArticleContentScrollable')
 const nELoadSpan                    = document.getElementById('nELoadSpan')
@@ -937,10 +961,8 @@ document.addEventListener('keydown', (e) => {
 function displayArticle(articleObject, index){
     newsArticleTitle.innerHTML = articleObject.title
     newsArticleTitle.href = articleObject.link
-    newsArticleAuthor.innerHTML = 'by ' + articleObject.author
+    newsArticleAuthor.innerHTML = 'por ' + articleObject.author
     newsArticleDate.innerHTML = articleObject.date
-    newsArticleComments.innerHTML = articleObject.comments
-    newsArticleComments.href = articleObject.commentsLink
     newsArticleContentScrollable.innerHTML = '<div id="newsArticleContentWrapper"><div class="newsArticleSpacerTop"></div>' + articleObject.content + '<div class="newsArticleSpacerBot"></div></div>'
     Array.from(newsArticleContentScrollable.getElementsByClassName('bbCodeSpoilerButton')).forEach(v => {
         v.onclick = () => {
